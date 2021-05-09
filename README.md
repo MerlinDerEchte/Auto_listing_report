@@ -8,7 +8,7 @@ In order to run this project...
 git clone https://github.com/MerlinDerEchte/Autoscout24_listing_report.git
 
 ### make sure node and npm are installed ( I used Node v15.0.1 and npm 6.14.10)
-node -v \s\s
+node -v <br>
 npm -v 
 
 ### install dependencies
