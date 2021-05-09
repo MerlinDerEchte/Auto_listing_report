@@ -20,9 +20,7 @@ describe('getListingsContactAmountAveragePrice', function(){
     })
 
     it('should return correct value for all testListings ', function(){
-        const testListingAmounts = testListingContactAmounts.sort((a,b) => {
-            return a.contactAmount - b.contactAmount;
-        })
+        
         assert.equal(getMostContactedListingAveragePrice(testListings,testContacts,1),20520)
     })
 
