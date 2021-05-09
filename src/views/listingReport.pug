@@ -1,0 +1,62 @@
+html
+  head
+    title Autoscout24 listing report
+    link(rel="stylesheet", href="/static/style.css")
+  body
+    h2= "Average Listing Selling Price per Seller Type"
+    table 
+        thead 
+            tr 
+                th Seller Type 
+                th Average price
+        tbody 
+            each val in  averagePricesBySellerType
+                tr 
+                    td= val.sellerType 
+                    td= `€ ${val.averagePrice},-`
+    hr
+    h2= "Percentual distribution of available cars by Make"
+    table 
+        thead 
+            tr 
+                th Make 
+                th Distribution
+        tbody 
+            each val in  makeProportions
+                tr 
+                    td= val.make 
+                    td= `${Math.round(val.proportion * 100)} %` 
+    hr
+    h2 Top 5 most contacted listings per Month
+    each m in topFiveMonthlyListingContacts
+        h3=`Month: ${(m.month.month +1).toString().length > 1 ?(m.month.month +1).toString() : "0" + (m.month.month +1).toString()}.${m.month.year}`
+        table   
+            thead 
+                tr 
+                    th Rating
+                    th Listing Id 
+                    th Make 
+                    th Selling Price 
+                    th Mileage 
+                    th Total Amount of contacts 
+            tbody 
+                - var rating = 1
+                each l,index in m.listingContactAmounts
+                    tr 
+                        
+                        - rating = index > 0 ? l.contactAmount < m.listingContactAmounts[index-1].contactAmount ? rating +1 : rating : rating
+                        td=`${rating}`
+                        td=l.listing.id 
+                        td=l.listing.make
+                        td=`€ ${l.listing.price},-` 
+                        td=`${l.listing.mileage} KM` 
+                        td=l.contactAmount
+    hr
+    h2 Average price of the 30% most contacted listings
+    table 
+        thead 
+            tr 
+                th Average price 
+        tbody 
+            tr 
+                td= `€ ${averagePriceOfTopThirtyPercentContactedListings},-`
