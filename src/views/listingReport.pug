@@ -1,7 +1,8 @@
 html
   head
     title Autoscout24 listing report
-    link(rel="stylesheet", href="/static/style.css")
+    style 
+        include ../styles/style.css
   body
     h2= "Average Listing Selling Price per Seller Type"
     table 
@@ -46,10 +47,10 @@ html
                         
                         - rating = index > 0 ? l.contactAmount < m.listingContactAmounts[index-1].contactAmount ? rating +1 : rating : rating
                         td=`${rating}`
-                        td=l.listing.id 
-                        td=l.listing.make
-                        td=`€ ${l.listing.price},-` 
-                        td=`${l.listing.mileage} KM` 
+                        td=l.id 
+                        td=l.make
+                        td=`€ ${l.price},-` 
+                        td=`${l.mileage} KM` 
                         td=l.contactAmount
     hr
     h2 Average price of the 30% most contacted listings

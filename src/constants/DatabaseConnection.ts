@@ -7,7 +7,7 @@ sqlite3.verbose();
 export class DatabaseConnection {
     private static instance: DatabaseConnection;
 
-    dataBase:sqlite3.Database = new sqlite3.Database(':memory:', (err) => {
+    dataBase: sqlite3.Database = new sqlite3.Database(':memory:', (err) => {
         if (err) {
             return console.error(err.message);
         }
@@ -23,8 +23,14 @@ export class DatabaseConnection {
     }
 
     createTables() {
-        this.dataBase.run('CREATE TABLE listings(id INTEGER PRIMARY KEY, make TEXT NOT NULL, price INTEGER, mileage INTEGER, seller_type TEXT);');
-        this.dataBase.run('CREATE TABLE contacts(listing_id INTEGER , contact_date DATE );');
+        return new Promise<string>((resolve, reject) => {
+            this.dataBase.run('CREATE TABLE listings(id INTEGER PRIMARY KEY, make TEXT NOT NULL, price INTEGER, mileage INTEGER, seller_type TEXT);', () => {
+                this.dataBase.run('CREATE TABLE contacts(listing_id INTEGER , contact_date DATE );', () => {
+                    resolve("done")
+                });
+            });
+        })
+
     }
 
     getListings(): Promise<IListing[]> {
@@ -89,31 +95,43 @@ export class DatabaseConnection {
     }
 
     importListingsFromCSV(csvPath: string) {
-        csvtojson().fromFile(csvPath)
-            .then((json: any) => {
+        return new Promise<string>((resolve, reject) => {
+            csvtojson().fromFile(csvPath)
+                .then((json: any) => {
 
-                for (let j of json) {
-                    const listing: IListing = {
-                        id: parseInt(j.id),
-                        make: j.make,
-                        price: parseInt(j.price),
-                        mileage: parseInt(j.mileage),
-                        sellerType: j.seller_type
+                    for (let j of json) {
+                        const listing: IListing = {
+                            id: parseInt(j.id),
+                            make: j.make,
+                            price: parseInt(j.price),
+                            mileage: parseInt(j.mileage),
+                            sellerType: j.seller_type
+                        }
+                        this.addListing(listing)
                     }
-                    this.addListing(listing)
-                }
 
-            }).then(res => console.log('import succesfull'))
+                }).then(res => {
+                    console.log("imported listings")
+                    resolve('import succesfull')}
+                    )
+        })
+
     }
     importContactsFromCSV(csvPath: string) {
-        csvtojson().fromFile(csvPath).then((json: any) => {
-            json.forEach((j: any) => {
-                const contact: IContact = {
-                    listingId: parseInt(j.listing_id),
-                    contactDate: new Date(parseInt(j.contact_date))
-                }
-                this.addContact(contact)
-            });
-        }).then(res => console.log('import succesfull'))
+        return new Promise<string>((resolve, reject) => {
+            csvtojson().fromFile(csvPath).then((json: any) => {
+                json.forEach((j: any) => {
+                    const contact: IContact = {
+                        listingId: parseInt(j.listing_id),
+                        contactDate: new Date(parseInt(j.contact_date))
+                    }
+                    this.addContact(contact)
+                });
+            }).then(res => {
+                console.log("imported contacts");
+                resolve('import succesfull')
+            })
+        })
+
     }
 }

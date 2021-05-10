@@ -6,7 +6,7 @@ export function getListingsContactAmounts(listings: IListing[], contacts: IConta
     let listingContactAmounts: IListingContactAmount[] = listings.map((l: IListing) => {
         const contactAmount: number = contacts.filter((c: IContact) => c.listingId === l.id).length;
         const listingContactAmount: IListingContactAmount = {
-            listing: l,
+            ...l,
             contactAmount: contactAmount
         }
         return listingContactAmount

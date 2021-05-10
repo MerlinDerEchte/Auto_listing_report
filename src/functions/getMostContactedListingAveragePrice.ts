@@ -9,8 +9,8 @@ export function getMostContactedListingAveragePrice(listings: IListing[], contac
     const listingsContacts : IListingContactAmount[] = getListingsContactAmounts(listings, contacts, proportion);
     
     if(listingsContacts.length > 0){
-        const newListings:IListing[] = listingsContacts.map((lc:IListingContactAmount) => lc.listing );
-        const averagePrice:number | null = getListingsAveragePrice(newListings);
+       
+        const averagePrice:number | null = getListingsAveragePrice(listingsContacts);
         return averagePrice;
     }else{
         return null;

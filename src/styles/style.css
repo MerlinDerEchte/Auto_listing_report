@@ -1,12 +1,9 @@
-h2{
-    color: red;
-}
-table thead th{
+th{
     text-align: center;
     width: 200px;
 }
 
-table tbody td{
+ td{
     text-align: center;
     width:200px
 }
