@@ -7,7 +7,10 @@ import {getMonthsFromContacts} from './getMonthsFromContacts';
 import {getListingsContactAmountsPerMonth} from './getListingsContactAmountsPerMonth';
 
 export function getTopListingContactsPerMonth(contacts: IContact[], listings:IListing[], listingAmount:number): IListingContactAmountPerMonth[]{
+    //extract monthsobjects of Contacts
     const months: IMonth[] = getMonthsFromContacts(contacts);
+    
+    // for each month get the ListingContactAmounts 
     const topMonthlyListingsContacts: IListingContactAmountPerMonth[] = months.map((m: IMonth) => {
 
         const topListingsContacts: IListingContactAmount[] = getListingsContactAmountsPerMonth(listings, contacts, m, listingAmount);

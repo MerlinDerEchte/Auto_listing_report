@@ -3,7 +3,7 @@ import {IContact} from '../models/IContact';
 
 export function getMonthsFromContacts(contacts:IContact[]):IMonth[]{
     let months:IMonth[] = [];
-
+    // extract month objects of Contacts
     contactLoop:
     for(let contact of contacts){
         const date = contact.contactDate;
@@ -19,6 +19,7 @@ export function getMonthsFromContacts(contacts:IContact[]):IMonth[]{
         }
         months.push(newMonth);
     }
+    // sort months by year, followed by month
     months.sort((m:IMonth,b:IMonth) => {
         if(m.year > b.year){
             return -1;

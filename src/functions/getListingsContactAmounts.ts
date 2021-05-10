@@ -3,6 +3,8 @@ import { IListingContactAmount } from '../models/IListingContactAmount';
 import { IContact } from '../models/IContact';
 
 export function getListingsContactAmounts(listings: IListing[], contacts: IContact[], proportion?: number): IListingContactAmount[]| []{
+    // get the listingContactamounts as objects
+    
     let listingContactAmounts: IListingContactAmount[] = listings.map((l: IListing) => {
         const contactAmount: number = contacts.filter((c: IContact) => c.listingId === l.id).length;
         const listingContactAmount: IListingContactAmount = {
@@ -11,7 +13,7 @@ export function getListingsContactAmounts(listings: IListing[], contacts: IConta
         }
         return listingContactAmount
     })
-
+    // if proportion is specified sort the listings and return the specified proportion of the listingsContactAmount objects
     if (proportion) {
         if (0 < proportion &&  proportion <= 1) {
 

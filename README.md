@@ -8,9 +8,12 @@ In order to run this project...
 ###  clone the repository: 
 git clone https://github.com/MerlinDerEchte/Autoscout24_listing_report.git
 
-### make sure node and npm are installed ( I used Node v15.0.1 and npm 6.14.10)
+### make sure node and npm are installed ( I used Node v15.0.1 and npm 7.12.0)
 node -v <br>
 npm -v 
+
+### navigate to AutoScout_24_listings_report
+cd AutoScout_24_listings_report
 
 ### install dependencies
 npm install
@@ -19,4 +22,5 @@ npm install
 npm test
 
 ## Run the project
-npm start
+npm start <br>
+The application should now run on localhost:8000
