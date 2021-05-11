@@ -18,11 +18,6 @@ app.set('view engine', 'pug');
 app.set("views", path.join(__dirname, 'views'));
 app.use("static", express.static(path.join(__dirname, "public")));
 
-// Create the tables of the database and import the CSV Data
-/* const db = DatabaseConnection.getInstance();
-await db.createTables();
-db.importContactsFromCSV('./contacts.csv');
-db.importListingsFromCSV('./listings.csv'); */
 async function createDatabase(callback: any) {
     const db = DatabaseConnection.getInstance();
     await db.createTables();
